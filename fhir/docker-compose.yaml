@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  fhir-postgres:
+    image: postgres:15
+    container_name: fhir-postgres
+    environment:
+      POSTGRES_DB: hapi
+      POSTGRES_USER: hapiuser
+      POSTGRES_PASSWORD: hapipassword
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  hapi-fhir:
+    image: hapiproject/hapi:latest
+    container_name: hapi-fhir
+    depends_on:
+      - fhir-postgres
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_CONFIG_LOCATION: classpath:/application.yaml
+      SPRING_DATASOURCE_URL: jdbc:postgresql://fhir-postgres:5432/hapi
+      SPRING_DATASOURCE_USERNAME: hapiuser
+      SPRING_DATASOURCE_PASSWORD: hapipassword
+      HAPI_FHIR_AUTO_CREATE_DATABASE: "true"  # 🔥 enables schema creation
+
+volumes:
+  pgdata:
