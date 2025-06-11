@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import axios from 'axios';
+import Loading from '../../../components/Loading';
 
 export default function PatientProfile() {
   const { id } = useParams();
@@ -16,7 +17,7 @@ export default function PatientProfile() {
     }
   }, [id]);
 
-  if (!patient) return <p>Loading...</p>;
+  if (!patient) return <Loading />;
 
   const name = `${patient.name?.[0]?.given?.join(' ')} ${patient.name?.[0]?.family || ''}`;
 

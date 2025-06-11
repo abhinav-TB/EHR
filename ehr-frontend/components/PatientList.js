@@ -5,6 +5,10 @@ import { useRouter } from 'next/navigation';
 export default function PatientList({ patients }) {
   const router = useRouter();
 
+  if (patients.length === 0) {
+    return <p className="text-center text-gray-500">No patients found.</p>;
+  }
+
   return (
     <ul className="space-y-2">
       {patients.map((entry, i) => {

@@ -1,5 +1,6 @@
 import { Geist, Geist_Mono } from "next/font/google";
-import "../styles/globals.css"; // Ensure you have a global CSS file for Tailwind
+import "../styles/globals.css";
+import NavBar from "../components/NavBar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -20,6 +21,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className="bg-white text-black">
+        <NavBar />
         {children}
       </body>
     </html>

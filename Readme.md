@@ -12,6 +12,8 @@ A simple Electronic Health Record (EHR) system using a React (Next.js) frontend,
 - **View Patient:** View patient details.
 - **FHIR Standard:** All patient data is stored as FHIR Patient resources.
 - **HAPI FHIR UI:** View and manage resources directly in the HAPI FHIR web interface.
+- **Navigation Bar:** Quick links to home and adding new patients.
+- **Loading Indicators:** Feedback when data is being fetched.
 
 ---
 
@@ -173,8 +175,17 @@ A minimal Patient resource:
 - **CORS errors:**  
   The backend enables CORS for `http://localhost:3000` by default.
 
-- **Method Not Allowed:**  
+- **Method Not Allowed:**
   Use `POST /Patient` to create and `PUT /Patient/{id}` to update on the FHIR server.
+
+---
+
+## Future Improvements
+
+- Integrate authentication so clinicians can have secure accounts.
+- Add unit tests and CI to ensure reliability.
+- Provide better validation and error messages in the patient form.
+- Containerize the frontend and backend for easier deployment.
 
 ---
 
