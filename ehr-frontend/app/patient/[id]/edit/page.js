@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import axios from 'axios';
 import PatientForm from '../../../../components/PatientForm';
+import Loading from '../../../../components/Loading';
 
 export default function EditPatientPage() {
   const { id } = useParams();
@@ -15,7 +16,7 @@ export default function EditPatientPage() {
     });
   }, [id]);
 
-  if (!patient) return <p className="text-center mt-10">Loading...</p>;
+  if (!patient) return <Loading />;
 
   return <PatientForm existingPatient={patient} />;
 }

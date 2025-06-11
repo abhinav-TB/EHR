@@ -3,16 +3,20 @@
 import { useState } from 'react';
 import PatientList from '../components/PatientList';
 import axios from 'axios';
+import Loading from '../components/Loading';
 
 export default function HomePage() {
   const [patients, setPatients] = useState([]);
   const [query, setQuery] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const searchPatients = async () => {
+    setIsLoading(true);
     const res = await axios.get(`http://localhost:8000/patients`, {
       params: { name: query },
     });
     setPatients(res.data.entry || []);
+    setIsLoading(false);
   };
 
   return (
@@ -48,7 +52,8 @@ export default function HomePage() {
         </button>
       </div>
 
-      <PatientList patients={patients} />
+      {isLoading && <Loading />}
+      {!isLoading && <PatientList patients={patients} />}
     </div>
   </div>
 
