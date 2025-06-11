@@ -19,12 +19,14 @@ export default function PatientForm({ existingPatient = null }) {
       birthDate
     };
 
-    if (existingPatient?.id) {
-      console.log('Updating existing patient:', existingPatient.id);
-      await axios.put(`http://localhost:8000/patients/${existingPatient.id}`, patientData);
-    } else {
-      await axios.post("http://localhost:8000/patients", patientData);
-    }
+ if (existingPatient?.id) {
+  await axios.put(`http://localhost:8000/patients/${existingPatient.id}`, {
+    ...patientData,
+    id: existingPatient.id, // Ensure id is present
+  });
+} else {
+  await axios.post("http://localhost:8000/patients", patientData);
+}
 
     router.push('/');
   };
