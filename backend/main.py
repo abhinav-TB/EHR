@@ -1,5 +1,5 @@
 
-from fastapi import FastAPI, Query, Body
+from fastapi import FastAPI, Query, Body, Request
 
 from fastapi.middleware.cors import CORSMiddleware
 import requests
@@ -15,8 +15,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# FHIR_BASE = "http://localhost:8080/fhir"  # Use local FHIR server
-FHIR_BASE = "http://hapi.fhir.org/baseR4"  # Use public FHIR server
+FHIR_BASE = "http://localhost:8080/fhir"  # Use local FHIR server
+# FHIR_BASE = "http://hapi.fhir.org/baseR4"  # Use public FHIR server
 
 @app.get("/patients")
 def get_patients(name: str = Query(None)):
@@ -34,6 +34,12 @@ def update_patient(id: str, patient: dict = Body(...)):
 def get_patient(id: str):
     r = requests.get(f"{FHIR_BASE}/Patient/{id}")
     return r.json()
+
+@app.post("/patients")
+async def create_patient(request: Request):
+    data = await request.json()
+    response = requests.post(f"{FHIR_BASE}/Patient", json=data)
+    return response.json()
 
 
 @app.get("/practitioners")
